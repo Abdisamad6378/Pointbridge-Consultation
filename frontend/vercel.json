@@ -1,0 +1,9 @@
+{
+  "rewrites": [
+    {
+      "source": "/sitemap.xml",
+      "destination": "https://pointbridge-backend.onrender.com/sitemap.xml"
+    },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}

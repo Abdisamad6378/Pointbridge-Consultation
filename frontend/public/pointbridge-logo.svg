@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 48" fill="none" role="img" aria-label="PointBridge Consulting">
+  <rect width="48" height="48" rx="10" fill="#0057B8"/>
+  <path d="M14 32V16h8c4.4 0 7 2.4 7 5.8 0 2.6-1.4 4.4-3.8 5.2L30 32h-4.2l-3.8-4.4H18V32H14zm4-8.2h3.6c1.8 0 2.8-.8 2.8-2.2s-1-2.2-2.8-2.2H18v4.4z" fill="white"/>
+  <text x="58" y="31" fill="#0B2545" font-family="Segoe UI, system-ui, sans-serif" font-size="17" font-weight="700">PointBridge</text>
+  <text x="58" y="44" fill="#39B54A" font-family="Segoe UI, system-ui, sans-serif" font-size="9" font-weight="600" letter-spacing="0.12em">CONSULTING</text>
+  <text x="58" y="31" fill="#0B2545" font-family="Segoe UI, system-ui, sans-serif" font-size="17" font-weight="700">PointBridge</text>
+  <text x="58" y="44" fill="#39B54A" font-family="Segoe UI, system-ui, sans-serif" font-size="9" font-weight="600" letter-spacing="0.12em">CONSULTING</text>
+</svg>
