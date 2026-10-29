@@ -23,13 +23,16 @@ import { buildDataSourceOptions } from './database/database.options.js';
     // In-memory storage: per process, so use a shared store (e.g. Redis) if you run several instances.
     ThrottlerModule.forRootAsync({
       inject: [ConfigService],
-      useFactory: (config: ConfigService) => [
-        {
-          name: 'default',
-          ttl: Number(config.get('THROTTLE_TTL_MS')) || 60_000,
-          limit: Number(config.get('THROTTLE_LIMIT')) || 120,
-        },
-      ],
+      useFactory: (config: ConfigService) => ({
+        throttlers: [
+          {
+            name: 'default',
+            ttl: Number(config.get('THROTTLE_TTL_MS')) || 60_000,
+            limit: Number(config.get('THROTTLE_LIMIT')) || 120,
+          },
+        ],
+        errorMessage: 'Too many attempts. Please wait a moment and try again.',
+      }),
     }),
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],

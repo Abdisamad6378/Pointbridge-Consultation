@@ -92,6 +92,20 @@ export async function signupRequest(data: {
   });
 }
 
+export async function forgotPasswordRequest(email: string) {
+  return api<{ ok: true; message: string }>("/api/auth/forgot-password", {
+    method: "POST",
+    body: JSON.stringify({ email }),
+  });
+}
+
+export async function resetPasswordRequest(data: { email: string; code: string; newPassword: string }) {
+  return api<{ ok: true; token: string; user: AuthUser }>("/api/auth/reset-password", {
+    method: "POST",
+    body: JSON.stringify(data),
+  });
+}
+
 export async function fetchMe() {
   return api<{ user: AuthUser }>("/api/auth/me");
 }

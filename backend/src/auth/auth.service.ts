@@ -17,7 +17,7 @@ export class AuthService {
   async signup(dto: SignupDto) {
     const { name, email, password, organization } = dto;
     const user = await this.usersService.create({ name, email, password, organization, role: 'user' });
-    return this.issueSession(user);
+    return this.createSession(user);
   }
 
   async login(dto: LoginDto) {
@@ -25,10 +25,10 @@ export class AuthService {
     if (!user || !(await bcrypt.compare(dto.password, user.password))) {
       throw new UnauthorizedException('Invalid credentials');
     }
-    return this.issueSession(user);
+    return this.createSession(user);
   }
 
-  private async issueSession(user: User) {
+  async createSession(user: User) {
     const payload: JwtPayload = { sub: user.id };
     return {
       ok: true as const,

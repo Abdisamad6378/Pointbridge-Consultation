@@ -1,6 +1,7 @@
 import type { DataSourceOptions } from 'typeorm';
 import { User } from '../users/user.entity.js';
 import { UserAvatar } from '../users/user-avatar.entity.js';
+import { PasswordResetCode } from '../auth/password-reset-code.entity.js';
 import { ContactMessage } from '../contacts/contact-message.entity.js';
 import { Testimonial } from '../testimonials/testimonial.entity.js';
 import { SiteImage } from '../site-images/site-image.entity.js';
@@ -25,7 +26,7 @@ export function buildDataSourceOptions(env: DbEnv): DataSourceOptions {
     username: env.DB_USERNAME ?? 'postgres',
     password: env.DB_PASSWORD,
     database: env.DB_DATABASE ?? 'pointbridge',
-    entities: [User, UserAvatar, ContactMessage, Testimonial, SiteImage, TeamMember, ClientLogo],
+    entities: [User, UserAvatar, PasswordResetCode, ContactMessage, Testimonial, SiteImage, TeamMember, ClientLogo],
     migrations: [new URL('../migrations/*.js', import.meta.url).pathname],
     synchronize: false,
   };

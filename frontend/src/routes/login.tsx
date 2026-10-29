@@ -48,7 +48,7 @@ function LoginPage() {
             <input type="checkbox" className="rounded border-border" />
             Remember me
           </label>
-          <Link to="/contact" className="text-primary hover:underline">Forgot password?</Link>
+          <Link to="/forgot-password" className="text-primary hover:underline">Forgot password?</Link>
         </div>
         <Button type="submit" className="w-full rounded-full" disabled={loading}>
           {loading ? "Signing in…" : "Sign In"}

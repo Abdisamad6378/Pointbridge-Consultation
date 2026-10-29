@@ -25,6 +25,10 @@ export class UsersService {
     return user;
   }
 
+  findOneByEmail(email: string) {
+    return this.repo.findOneBy({ email: email.trim().toLowerCase() });
+  }
+
   findOneByEmailWithPassword(email: string) {
     return this.repo
       .createQueryBuilder('user')

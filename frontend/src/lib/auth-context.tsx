@@ -4,6 +4,7 @@ import {
   getToken,
   loginRequest,
   removeAvatarRequest,
+  resetPasswordRequest,
   setToken,
   signupRequest,
   TOKEN_KEY,
@@ -22,6 +23,7 @@ type AuthContextValue = {
   updateProfile: (data: { name?: string; organization?: string }) => Promise<AuthUser>;
   uploadAvatar: (image: Blob) => Promise<AuthUser>;
   removeAvatar: () => Promise<AuthUser>;
+  resetPassword: (data: { email: string; code: string; newPassword: string }) => Promise<AuthUser>;
 };
 
 const AuthContext = createContext<AuthContextValue | null>(null);
@@ -88,6 +90,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       },
       uploadAvatar: async (image) => {
         const result = await uploadAvatarRequest(image);
+        setUser(result.user);
+        return result.user;
+      },
+      resetPassword: async (data) => {
+        const result = await resetPasswordRequest(data);
+        setToken(result.token);
         setUser(result.user);
         return result.user;
       },
