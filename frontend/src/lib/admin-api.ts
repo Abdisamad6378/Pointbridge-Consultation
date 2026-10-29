@@ -62,6 +62,11 @@ async function api<T>(path: string, init?: RequestInit): Promise<T> {
   const body = (await response.json().catch(() => null)) as ApiErrorBody | T | null;
 
   if (!response.ok) {
+    // No JSON body on a 5xx usually means the API itself is down (e.g. the dev proxy
+    // could not connect), rather than an error the API reported.
+    if (!body && response.status >= 500) {
+      throw new Error("Can't reach the server right now. Please try again in a moment.");
+    }
     throw new Error(errorMessage(body as ApiErrorBody | null));
   }
 
