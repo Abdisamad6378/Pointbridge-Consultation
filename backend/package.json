@@ -24,7 +24,8 @@
     "migration:generate": "npm run build && typeorm migration:generate -d dist/database/data-source.js",
     "migration:run": "npm run build && typeorm migration:run -d dist/database/data-source.js",
     "migration:revert": "typeorm migration:revert -d dist/database/data-source.js",
-    "user:promote": "node dist/scripts/promote-admin.js"
+    "user:promote": "node dist/scripts/promote-admin.js",
+    "user:reset-password": "node dist/scripts/reset-password.js"
   },
   "dependencies": {
     "@nestjs/common": "^12.0.1",
