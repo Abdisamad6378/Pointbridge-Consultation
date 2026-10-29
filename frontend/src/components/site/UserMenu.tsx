@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useRef, useState } from "react";
-import { Camera, ChevronDown, LayoutDashboard, Loader2, LogIn, LogOut, Trash2, UserPlus, UserRound } from "lucide-react";
+import { Camera, ChevronDown, LayoutDashboard, Loader2, LogIn, LogOut, Plus, Trash2, UserPlus, UserRound } from "lucide-react";
 import { toast } from "sonner";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -53,16 +53,22 @@ export function useAvatarPicker() {
     }
   };
 
+  // Upload handler for the file chosen in the native picker.
+  const handleFile = (file: File) => run(async () => uploadAvatar(await prepareAvatar(file)), "Profile photo updated");
+
   const input = (
     <input
       ref={inputRef}
       type="file"
       accept={AVATAR_ACCEPT}
       className="hidden"
+      tabIndex={-1}
+      aria-hidden
       onChange={(event) => {
         const file = event.target.files?.[0];
+        // Reset so choosing the same file again still fires onChange.
         event.target.value = "";
-        if (file) void run(async () => uploadAvatar(await prepareAvatar(file)), "Profile photo updated");
+        if (file) void handleFile(file);
       }}
     />
   );
@@ -73,6 +79,41 @@ export function useAvatarPicker() {
     choose: () => inputRef.current?.click(),
     remove: () => run(removeAvatar, "Profile photo removed"),
   };
+}
+
+/**
+ * The user's avatar with a small "+" badge on its bottom-right corner. Clicking the
+ * avatar or the badge opens the native file picker via `onPick`.
+ */
+function AvatarUploadButton({
+  user,
+  busy,
+  onPick,
+  className,
+}: {
+  user: AuthUser;
+  busy: boolean;
+  onPick: () => void;
+  className?: string;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onPick}
+      disabled={busy}
+      className="group relative block shrink-0 rounded-full outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-wait"
+      aria-label={user.avatarUrl ? "Change profile photo" : "Upload profile photo"}
+      title={user.avatarUrl ? "Change photo" : "Upload photo"}
+    >
+      <UserAvatar user={user} busy={busy} className={className} />
+      <span
+        aria-hidden
+        className="absolute bottom-0 right-0 flex h-4 w-4 items-center justify-center rounded-full border border-border bg-background text-primary shadow-md transition-all duration-200 group-hover:scale-110 group-hover:border-primary group-hover:bg-primary group-hover:text-primary-foreground group-disabled:opacity-0"
+      >
+        <Plus className="h-3 w-3" strokeWidth={3} />
+      </span>
+    </button>
+  );
 }
 
 function useSignOut() {
@@ -116,7 +157,7 @@ export function HeaderAuthActions() {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-64">
               <DropdownMenuLabel className="flex items-center gap-3 py-2 font-normal">
-                <UserAvatar user={user} busy={photo.busy} className="h-10 w-10 text-base" />
+                <AvatarUploadButton user={user} busy={photo.busy} onPick={photo.choose} className="h-10 w-10 text-base" />
                 <div className="min-w-0">
                   <p className="truncate text-sm font-semibold">{user.name}</p>
                   <p className="truncate text-xs text-muted-foreground">{user.email}</p>
@@ -199,18 +240,7 @@ export function MobileAuthActions({ onNavigate }: { onNavigate: () => void }) {
       <div className="grid gap-3">
         {photo.input}
         <div className="flex h-14 items-center gap-3 rounded-full border px-2">
-          <button
-            type="button"
-            onClick={photo.choose}
-            disabled={photo.busy}
-            className="relative shrink-0 rounded-full"
-            aria-label={user.avatarUrl ? "Change profile photo" : "Upload profile photo"}
-          >
-            <UserAvatar user={user} busy={photo.busy} className="h-10 w-10 text-base" />
-            <span className="absolute -bottom-0.5 -right-0.5 flex h-5 w-5 items-center justify-center rounded-full border-2 border-background bg-primary text-primary-foreground">
-              <Camera className="h-2.5 w-2.5" />
-            </span>
-          </button>
+          <AvatarUploadButton user={user} busy={photo.busy} onPick={photo.choose} className="h-10 w-10 text-base" />
           <div className="min-w-0 flex-1 leading-tight">
             <p className="truncate text-sm font-semibold">{user.name}</p>
             <p className="truncate text-xs text-muted-foreground">{user.email}</p>

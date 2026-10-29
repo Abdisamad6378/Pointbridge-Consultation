@@ -115,7 +115,7 @@ function ProfilePage() {
                 </Button>
               )}
             </div>
-            <p className="mt-2 text-xs text-muted-foreground">JPEG, PNG or WebP. Cropped to a square automatically.</p>
+            <p className="mt-2 text-xs text-muted-foreground">Any common image format. Cropped to a square automatically.</p>
           </div>
         </div>
 

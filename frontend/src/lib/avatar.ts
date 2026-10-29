@@ -1,8 +1,8 @@
 const OUTPUT_SIZE = 256;
 const MAX_INPUT_BYTES = 15 * 1024 * 1024;
-const ACCEPTED_TYPES = ["image/jpeg", "image/png", "image/webp"];
-
-export const AVATAR_ACCEPT = ACCEPTED_TYPES.join(",");
+// Any image the browser can decode is fine: it is re-encoded to WebP/JPEG below,
+// so the server only ever receives those formats.
+export const AVATAR_ACCEPT = "image/*";
 
 /**
  * Center-crops an image to a square and scales it to 256×256, returning a small WebP
@@ -10,8 +10,8 @@ export const AVATAR_ACCEPT = ACCEPTED_TYPES.join(",");
  * the original photo size.
  */
 export async function prepareAvatar(file: File): Promise<Blob> {
-  if (!ACCEPTED_TYPES.includes(file.type)) {
-    throw new Error("Please choose a JPEG, PNG or WebP image");
+  if (!file.type.startsWith("image/")) {
+    throw new Error("Please choose an image file");
   }
   if (file.size > MAX_INPUT_BYTES) {
     throw new Error("That image is too large (max 15 MB)");
@@ -21,7 +21,7 @@ export async function prepareAvatar(file: File): Promise<Blob> {
   try {
     bitmap = await createImageBitmap(file);
   } catch {
-    throw new Error("That image could not be read");
+    throw new Error("That image format isn't supported by your browser — try JPEG or PNG");
   }
 
   const side = Math.min(bitmap.width, bitmap.height);
