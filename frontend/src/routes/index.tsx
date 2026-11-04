@@ -245,26 +245,27 @@ function Home() {
           <Reveal>
             <SectionHeader eyebrow="Client voices" title="What our clients say" />
           </Reveal>
-          <div className="mt-10 grid gap-6 md:grid-cols-3">
+          <div className="mt-10 grid gap-6 lg:grid-cols-3">
             {testimonials.map((t, i) => (
-              <Reveal key={t.name ?? i} delay={i * 0.08}>
+              <Reveal key={t.name ?? i} delay={i * 0.08} className="h-full">
                 <Card className="h-full border-border/60 bg-white shadow-sm">
-                  <CardContent className="p-6 sm:p-8">
+                  <CardContent className="flex h-full flex-col p-6 sm:p-8">
                     <div className="flex gap-0.5 text-secondary">
                       {Array.from({ length: 5 }).map((_, j) => (
                         <Star key={j} className="h-4 w-4 fill-current" />
                       ))}
                     </div>
                     <p className="mt-4 text-sm leading-relaxed text-muted-foreground">"{t.quote}"</p>
-                    <div className="mt-6 flex items-center gap-3">
-                      <div className="h-12 w-12 overflow-hidden rounded-full bg-muted ring-2 ring-secondary/20">
+                    <div className="mt-auto flex items-center gap-3 pt-6">
+                      <div className="h-12 w-12 shrink-0 overflow-hidden rounded-full bg-muted ring-2 ring-secondary/20">
                         <img
                           src={t.image ?? images.team[i] ?? images.team[0]}
                           alt={t.name}
                           className="h-full w-full object-cover"
                         />
                       </div>
-                      <div>
+                      {/* Fits a two-line role, so wrapping doesn't shift the photo between cards. */}
+                      <div className="flex min-h-13 flex-col justify-center">
                         <div className="font-semibold text-sm">{t.name}</div>
                         <div className="text-xs text-muted-foreground">{t.role}</div>
                       </div>
