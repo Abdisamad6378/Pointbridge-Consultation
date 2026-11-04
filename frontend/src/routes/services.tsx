@@ -1,10 +1,11 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { CheckCircle2 } from "lucide-react";
 import { Reveal } from "@/components/site/Reveal";
 import { PageHero } from "@/components/site/PageHero";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { SectionHeader } from "@/components/site/SectionHeader";
-import { additionalServices, services } from "@/lib/site-data";
+import { additionalServices, approachSteps, services } from "@/lib/site-data";
 import { servicesIntro } from "@/lib/company-profile";
 import { images } from "@/lib/images";
 
@@ -15,7 +16,7 @@ export const Route = createFileRoute("/services")({
       {
         name: "description",
         content:
-          "Strategic policy, peace-building, audit & risk, human capital, research, M&E, business development, ICT and more.",
+          "Strategic policy, peace-building, audit & risk, human capital, research, M&E, business development, needs assessments, community engagement, proposal writing, ICT and more.",
       },
       { property: "og:title", content: "Services — PointBridge Consulting" },
       { property: "og:description", content: "Our core service areas — independent advisory & evaluation." },
@@ -99,6 +100,41 @@ function Services() {
               <ServiceBlock key={s.slug} service={s} index={i} />
             ))}
           </div>
+        </div>
+      </section>
+
+      <section className="section-padding">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <Reveal>
+            <SectionHeader eyebrow="How We Work" title="From question to decision" />
+          </Reveal>
+          <ol className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {approachSteps.map((step, i) => (
+              <Reveal key={step.title} delay={i * 0.05}>
+                <li className="h-full border-t-2 border-primary pt-5">
+                  <span className="text-sm font-bold text-primary">{String(i + 1).padStart(2, "0")}</span>
+                  <h3 className="mt-2 text-lg font-bold">{step.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{step.description}</p>
+                </li>
+              </Reveal>
+            ))}
+          </ol>
+
+          <Reveal>
+            <div className="gradient-hero mt-12 flex flex-col gap-6 rounded-2xl p-8 text-white md:flex-row md:items-center md:justify-between">
+              <div>
+                <h2 className="text-2xl font-bold">Have an assignment in a complex setting?</h2>
+                <p className="mt-2 text-white/85">
+                  Share your ToR and we'll respond with a tailored technical and financial proposal.
+                </p>
+              </div>
+              <div className="flex shrink-0 flex-col items-center gap-2">
+                <Button asChild variant="secondary" size="lg">
+                  <Link to="/contact">Request a proposal</Link>
+                </Button>
+              </div>
+            </div>
+          </Reveal>
         </div>
       </section>
     </>

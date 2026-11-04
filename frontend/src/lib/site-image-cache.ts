@@ -8,9 +8,12 @@ type CachedPayload = {
   updatedAt: number;
 };
 
-/** Smaller URLs for faster hero / card loads (especially Unsplash). */
+/** Smaller URLs for faster hero / card loads (Cloudinary and Unsplash). */
 export function optimizeImageUrl(url: string, width = 1280) {
   if (!url) return url;
+  if (url.includes("res.cloudinary.com")) {
+    return url.replace(/\/image\/upload\/(?:f_auto,q_auto,c_limit,w_\d+\/)?/, `/image/upload/f_auto,q_auto,c_limit,w_${width}/`);
+  }
   if (url.includes("images.unsplash.com")) {
     const base = url.split("?")[0];
     return `${base}?w=${width}&q=75&auto=format&fit=crop`;

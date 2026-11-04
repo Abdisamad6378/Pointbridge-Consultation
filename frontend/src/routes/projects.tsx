@@ -6,7 +6,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { projects, projectCategories } from "@/lib/site-data";
+import { SectionHeader } from "@/components/site/SectionHeader";
+import { fieldGallery, projects, projectCategories } from "@/lib/site-data";
 import { images } from "@/lib/images";
 
 export const Route = createFileRoute("/projects")({
@@ -68,12 +69,39 @@ function Projects() {
                   <CardContent className="p-6">
                     <div className="flex items-center gap-2">
                       <Badge variant="secondary">{p.category}</Badge>
-                      <span className="text-xs text-muted-foreground">{p.year}</span>
+                      {p.year && <span className="text-xs text-muted-foreground">{p.year}</span>}
                     </div>
                     <h3 className="mt-3 font-bold leading-snug">{p.title}</h3>
                     <p className="mt-2 line-clamp-2 text-sm text-muted-foreground">{p.summary}</p>
                   </CardContent>
                 </Card>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section-padding border-t border-border bg-muted/30">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <Reveal>
+            <SectionHeader
+              eyebrow="From the Field"
+              title="Our teams, on the ground"
+              description="Data collection, consultations and site verification across South and Central Somalia."
+            />
+          </Reveal>
+          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {fieldGallery.map((photo, i) => (
+              <Reveal key={photo.label} delay={i * 0.05}>
+                <figure>
+                  <div className="aspect-[16/10] overflow-hidden rounded-xl bg-muted">
+                    <img src={photo.image} alt={photo.alt} loading="lazy" className="h-full w-full object-cover object-top" />
+                  </div>
+                  <figcaption className="mt-3">
+                    <p className="text-xs font-semibold uppercase tracking-wider text-primary">{photo.label}</p>
+                    <p className="mt-1 text-sm text-muted-foreground">{photo.caption}</p>
+                  </figcaption>
+                </figure>
               </Reveal>
             ))}
           </div>
@@ -94,7 +122,7 @@ function Projects() {
               <div className="p-6">
                 <DialogHeader>
                   <DialogTitle>{active.title}</DialogTitle>
-                  <DialogDescription>{active.category} · {active.year}</DialogDescription>
+                  <DialogDescription>{active.year ? `${active.category} · ${active.year}` : active.category}</DialogDescription>
                 </DialogHeader>
                 <p className="mt-4 text-sm text-muted-foreground leading-relaxed">{active.summary}</p>
                 <p className="mt-3 text-sm text-muted-foreground leading-relaxed">

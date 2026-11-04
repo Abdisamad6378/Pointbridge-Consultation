@@ -1,4 +1,7 @@
 import {
+  ClipboardCheck,
+  FileText,
+  MessagesSquare,
   Scale,
   HandshakeIcon,
   ShieldCheck,
@@ -12,6 +15,7 @@ import {
   Building2,
   type LucideIcon,
 } from "lucide-react";
+import { images } from "./images";
 
 export type ServiceItem = {
   title: string;
@@ -298,6 +302,79 @@ export const services: Service[] = [
       },
     ],
   },
+  {
+    slug: "needs-damage-assessments",
+    title: "Needs & Damage Assessments",
+    short:
+      "Rapid and multi-sector assessments, damage documentation, and climate-risk profiling in hard-to-reach areas.",
+    icon: ClipboardCheck,
+    featured: true,
+    items: [
+      {
+        title: "Rapid Needs Assessments",
+        description: "Fast assessments of community needs in hard-to-reach areas.",
+      },
+      {
+        title: "Multi-Sector Needs Assessments",
+        description: "Assessments that look across sectors to give a complete picture of need.",
+      },
+      {
+        title: "Shelter & Livelihood Damage",
+        description: "Documentation of damage to shelter and livelihoods, verified on site.",
+      },
+      {
+        title: "Climate-Risk Profiling",
+        description: "Profiles of climate risk for the communities and areas assessed.",
+      },
+    ],
+  },
+  {
+    slug: "community-engagement",
+    title: "Community Engagement & Consultations",
+    short:
+      "Focus groups, elder and youth consultations, and accountability work, run in Somali with respect for local structures.",
+    icon: MessagesSquare,
+    featured: true,
+    items: [
+      {
+        title: "Focus Group Discussions",
+        description: "Facilitated discussions on community priorities and experiences.",
+      },
+      {
+        title: "Elder & Youth Consultations",
+        description: "Consultations with elders and youth that respect local structures.",
+      },
+      {
+        title: "Accountability to Affected Populations",
+        description: "Work that keeps programmes answerable to the people they affect.",
+      },
+      {
+        title: "Consultations in Somali",
+        description: "Engagement led in Somali by people who speak the community's language.",
+      },
+    ],
+  },
+  {
+    slug: "proposal-writing-translation",
+    title: "Proposal Writing & Translation",
+    short: "Concept notes, grant proposals, and English–Somali translation of tools, policies, and reports.",
+    icon: FileText,
+    featured: true,
+    items: [
+      {
+        title: "Concept Notes",
+        description: "Clear concept notes that set out the case for a programme.",
+      },
+      {
+        title: "Grant Proposals",
+        description: "Grant proposals prepared for humanitarian and development funding.",
+      },
+      {
+        title: "English–Somali Translation",
+        description: "Translation of tools, policies, and reports between English and Somali.",
+      },
+    ],
+  },
 ];
 
 export const additionalServices: Service[] = [
@@ -368,6 +445,25 @@ export const additionalServices: Service[] = [
   },
 ];
 
+export const approachSteps = [
+  {
+    title: "Scope & design",
+    description: "Clear questions, a fit-for-context methodology and tested tools.",
+  },
+  {
+    title: "Collect in the field",
+    description: "Trained local enumerators, informed consent and do-no-harm practice.",
+  },
+  {
+    title: "Analyse & validate",
+    description: "Triangulated findings, checked with stakeholders before reporting.",
+  },
+  {
+    title: "Deliver donor-ready",
+    description: "Concise reports and briefs with actionable recommendations.",
+  },
+];
+
 export const featuredServices = services.filter((s) => s.featured !== false);
 
 export const allServices = [...services, ...additionalServices];
@@ -389,7 +485,7 @@ export const trainings = [
       "Market systems and scenario modeling",
       "Macro and micro economic advisory",
     ],
-    image: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800&q=80",
+    image: "https://res.cloudinary.com/tsrb1ctu/image/upload/f_auto,q_auto,c_limit,w_800/pointbridge/site/photo-1524178232363-1fb2b075b655",
   },
   {
     title: "Finance & Compliance",
@@ -400,7 +496,7 @@ export const trainings = [
       "Internal controls and audit readiness",
       "Financial reporting for NGOs and SMEs",
     ],
-    image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&q=80",
+    image: "https://res.cloudinary.com/tsrb1ctu/image/upload/f_auto,q_auto,c_limit,w_800/pointbridge/site/photo-1516321318423-f06f85e504b3",
   },
   {
     title: "Leadership Development",
@@ -411,7 +507,7 @@ export const trainings = [
       "Team effectiveness and negotiation",
       "Public sector leadership academies",
     ],
-    image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&q=80",
+    image: "https://res.cloudinary.com/tsrb1ctu/image/upload/f_auto,q_auto,c_limit,w_800/pointbridge/site/photo-1522202176988-66273c2fd55f",
   },
   {
     title: "Marketing & Communications",
@@ -422,18 +518,34 @@ export const trainings = [
       "Digital marketing fundamentals",
       "Brand building and outreach",
     ],
-    image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80",
+    image: "https://res.cloudinary.com/tsrb1ctu/image/upload/f_auto,q_auto,c_limit,w_800/pointbridge/site/photo-1552664730-d307ca884978",
   },
 ];
 
 export const projects = [
+  {
+    title: "Conflict Analysis in Gedo",
+    category: "Peace Building",
+    year: 2026,
+    summary:
+      "Conflict mapping across Luuq and surrounding settlements in Jubaland, combining key informant interviews with geotagged site verification of conflict-affected infrastructure such as schools in Busley.",
+    image: images.field.busleySchool,
+  },
+  {
+    title: "Women and Youth Caucuses in Galmudug",
+    category: "Governance",
+    year: 2026,
+    summary:
+      "Anticipatory mapping, formation and legalisation of women and youth caucuses in Galkacyo (Mudug) and Galgaduud, delivered with the Galmudug Ministry of Interior & Local Governments through community workshops with women, youth and local leaders.",
+    image: images.field.galmudugPanel,
+  },
   {
     title: "National HR Systems Reform",
     category: "HR Development",
     year: 2024,
     summary:
       "Designed and delivered end-to-end HR systems across public institutions, including recruitment services and performance frameworks.",
-    image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80",
+    image: "https://res.cloudinary.com/tsrb1ctu/image/upload/f_auto,q_auto,c_limit,w_800/pointbridge/site/photo-1486406146926-c627a92ad1ab",
   },
   {
     title: "Peace & Reconciliation Programme",
@@ -441,7 +553,7 @@ export const projects = [
     year: 2023,
     summary:
       "Conflict-sensitive programme design and social cohesion initiatives across multiple regions in the Horn of Africa.",
-    image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&q=80",
+    image: "https://res.cloudinary.com/tsrb1ctu/image/upload/f_auto,q_auto,c_limit,w_800/pointbridge/site/photo-1529156069898-49953e39b3ac",
   },
   {
     title: "M&E Digital Dashboard",
@@ -449,7 +561,7 @@ export const projects = [
     year: 2024,
     summary:
       "Real-time M&E dashboards and results frameworks for a multi-donor development programme.",
-    image: "https://images.unsplash.com/photo-1553877522-43269d4ea984?w=800&q=80",
+    image: "https://res.cloudinary.com/tsrb1ctu/image/upload/f_auto,q_auto,c_limit,w_800/pointbridge/site/photo-1553877522-43269d4ea984",
   },
   {
     title: "Governance Reform Advisory",
@@ -457,7 +569,7 @@ export const projects = [
     year: 2022,
     summary:
       "National policy advisory, decentralization support, and capacity building for institutional reform.",
-    image: "https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=800&q=80",
+    image: "https://res.cloudinary.com/tsrb1ctu/image/upload/f_auto,q_auto,c_limit,w_800/pointbridge/site/photo-1497366811353-6870744d04b2",
   },
   {
     title: "Socio-economic Baseline Study",
@@ -465,7 +577,7 @@ export const projects = [
     year: 2023,
     summary:
       "Mixed-methods baseline surveys and statistical analysis in complex and fragile settings.",
-    image: "https://images.unsplash.com/photo-1556761175-b413da4baf72?w=800&q=80",
+    image: "https://res.cloudinary.com/tsrb1ctu/image/upload/f_auto,q_auto,c_limit,w_800/pointbridge/site/photo-1556761175-b413da4baf72",
   },
   {
     title: "Professional Training Academy",
@@ -473,7 +585,46 @@ export const projects = [
     year: 2024,
     summary:
       "Structured capacity development programmes training 1,200+ professionals in leadership, finance, and M&E.",
-    image: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=800&q=80",
+    image: "https://res.cloudinary.com/tsrb1ctu/image/upload/f_auto,q_auto,c_limit,w_800/pointbridge/site/photo-1542744173-8e7e53415bb0",
+  },
+];
+
+export const fieldGallery = [
+  {
+    image: images.field.keyInformantInterview,
+    alt: "Two PointBridge consultants interviewing a key informant indoors",
+    label: "Key informant interview",
+    caption: "Structured interviews with local leaders during an evaluation.",
+  },
+  {
+    image: images.field.eldersConsultation,
+    alt: "PointBridge enumerator holding a group discussion with elders",
+    label: "Focus group discussion",
+    caption: "Consulting community elders on local priorities.",
+  },
+  {
+    image: images.field.damagedShelter,
+    alt: "Damaged shelter structure recorded during site verification",
+    label: "Site verification",
+    caption: "Documenting damaged structures for a needs assessment.",
+  },
+  {
+    image: images.field.fieldTeam,
+    alt: "PointBridge field team of four standing together",
+    label: "Our field team",
+    caption: "Trained local researchers and enumerators, women and men, who speak the community's language.",
+  },
+  {
+    image: images.field.luuqInterview,
+    alt: "Enumerator reviewing a key informant interview question set in Luuq",
+    label: "Conflict mapping · Luuq",
+    caption: "Key informant interview in Luuq, Gedo Region.",
+  },
+  {
+    image: images.field.caucusWorkshop,
+    alt: "Community members at a caucus-formation workshop in Galmudug",
+    label: "Stakeholder workshop · Galmudug",
+    caption: "Women and youth caucus formation session.",
   },
 ];
 
@@ -493,21 +644,21 @@ export const testimonials = [
     role: "Director, Ministry of Planning",
     quote:
       "PointBridge delivered rigorous evaluations with discipline and integrity in one of our most complex reform programmes.",
-    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80",
+    image: "https://res.cloudinary.com/tsrb1ctu/image/upload/f_auto,q_auto,c_limit,w_400/pointbridge/site/photo-1573496359142-b8d87734a5a2",
   },
   {
     name: "Mark Johansson",
     role: "Country Director, INGO",
     quote:
       "Their M&E framework changed how we report results to donors — clear, defensible, and on time.",
-    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80",
+    image: "https://res.cloudinary.com/tsrb1ctu/image/upload/f_auto,q_auto,c_limit,w_400/pointbridge/site/photo-1472099645785-5658abf4ff4e",
   },
   {
     name: "Hodan Ahmed",
     role: "Programme Manager, UN Agency",
     quote:
       "Rigorous, ethical and locally grounded. Exactly what fragile contexts need from an advisory partner.",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80",
+    image: "https://res.cloudinary.com/tsrb1ctu/image/upload/f_auto,q_auto,c_limit,w_400/pointbridge/site/photo-1729355796906-10a9809e0864",
   },
 ];
 
@@ -532,7 +683,7 @@ export const publications = [
     date: "2026-04-04",
     excerpt:
       "A practical framework for designing and implementing governance reforms in complex and fragile settings.",
-    image: "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800&q=80",
+    image: "https://res.cloudinary.com/tsrb1ctu/image/upload/f_auto,q_auto,c_limit,w_800/pointbridge/site/photo-1504711434969-e33886168f5c",
   },
   {
     slug: "livelihoods-baseline",
@@ -543,7 +694,7 @@ export const publications = [
     date: "2026-04-02",
     excerpt:
       "Mixed-methods baseline examining livelihood recovery and socio-economic dynamics in post-conflict areas.",
-    image: "https://images.unsplash.com/photo-1556761175-b413da4baf72?w=800&q=80",
+    image: "https://res.cloudinary.com/tsrb1ctu/image/upload/f_auto,q_auto,c_limit,w_800/pointbridge/site/photo-1556761175-b413da4baf72",
   },
   {
     slug: "peace-program-evaluation",
@@ -554,7 +705,7 @@ export const publications = [
     date: "2026-03-18",
     excerpt:
       "Independent evaluation assessing outcomes, sustainability and lessons from a regional peace initiative.",
-    image: "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=800&q=80",
+    image: "https://res.cloudinary.com/tsrb1ctu/image/upload/f_auto,q_auto,c_limit,w_800/pointbridge/site/photo-1473341304170-971dccb5ac1e",
   },
   {
     slug: "hr-maturity-model",
@@ -565,7 +716,7 @@ export const publications = [
     date: "2026-02-10",
     excerpt:
       "A diagnostic tool for ministries and public agencies to assess and strengthen HR system performance.",
-    image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&q=80",
+    image: "https://res.cloudinary.com/tsrb1ctu/image/upload/f_auto,q_auto,c_limit,w_800/pointbridge/site/photo-1454165804606-c3d57bc86b40",
   },
   {
     slug: "digital-me",
@@ -576,7 +727,7 @@ export const publications = [
     date: "2026-01-22",
     excerpt:
       "How digital dashboards transform monitoring from a compliance exercise into decision support.",
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
+    image: "https://res.cloudinary.com/tsrb1ctu/image/upload/f_auto,q_auto,c_limit,w_800/pointbridge/site/photo-1460925895917-afdab827c52f",
   },
   {
     slug: "sme-investment",
@@ -587,7 +738,7 @@ export const publications = [
     date: "2025-11-05",
     excerpt:
       "Guidance for entrepreneurs and development partners on building investable, growth-ready businesses.",
-    image: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=800&q=80",
+    image: "https://res.cloudinary.com/tsrb1ctu/image/upload/f_auto,q_auto,c_limit,w_800/pointbridge/site/photo-1507679799987-c73779587ccf",
   },
 ];
 
@@ -601,7 +752,7 @@ export const blogPosts = [
     date: "2026-05-12",
     excerpt:
       "Methodological discipline is what separates credible evidence from advocacy in complex settings.",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",
+    image: "https://res.cloudinary.com/tsrb1ctu/image/upload/f_auto,q_auto,c_limit,w_800/pointbridge/site/photo-1551288049-bebda4e38f71",
   },
   {
     slug: "designing-m-e-that-leaders-use",
@@ -609,7 +760,7 @@ export const blogPosts = [
     category: "M&E",
     date: "2026-04-02",
     excerpt: "Dashboards fail when they answer the wrong questions. Start with decisions.",
-    image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=80",
+    image: "https://res.cloudinary.com/tsrb1ctu/image/upload/f_auto,q_auto,c_limit,w_800/pointbridge/site/photo-1522071820081-009f0129c71c",
   },
   {
     slug: "leadership-public-sector-reform",
@@ -617,7 +768,7 @@ export const blogPosts = [
     category: "Leadership",
     date: "2026-02-21",
     excerpt: "Reform is a coalition exercise. The technical work is only part of the solution.",
-    image: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=800&q=80",
+    image: "https://res.cloudinary.com/tsrb1ctu/image/upload/f_auto,q_auto,c_limit,w_800/pointbridge/site/photo-1542744173-8e7e53415bb0",
   },
   {
     slug: "peace-building-evidence",
@@ -625,7 +776,7 @@ export const blogPosts = [
     category: "Peace",
     date: "2026-01-15",
     excerpt: "How to evaluate something as contested and political as peace itself.",
-    image: "https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?w=800&q=80",
+    image: "https://res.cloudinary.com/tsrb1ctu/image/upload/f_auto,q_auto,c_limit,w_800/pointbridge/site/photo-1573164713714-d95e436ab8d6",
   },
 ];
 
@@ -634,25 +785,25 @@ export const teamMembers = [
     name: "Keynan A. Mohamed",
     role: "Managing Partner",
     bio: "20+ years across governance, M&E and institutional reform in East Africa.",
-    image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&q=80",
+    image: "https://res.cloudinary.com/tsrb1ctu/image/upload/f_auto,q_auto,c_limit,w_400/pointbridge/site/photo-1560250097-0b93528c311a",
   },
   {
     name: "Dr. Fatuma Hassan",
     role: "Director, Research & Analytics",
     bio: "Mixed-methods researcher specializing in fragile and humanitarian contexts.",
-    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80",
+    image: "https://res.cloudinary.com/tsrb1ctu/image/upload/f_auto,q_auto,c_limit,w_400/pointbridge/site/photo-1573496359142-b8d87734a5a2",
   },
   {
     name: "Ahmed Warsame",
     role: "Head of Audit & Risk",
     bio: "CPA, CIA. Former Big Four assurance leader with deep NGO and public sector experience.",
-    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80",
+    image: "https://res.cloudinary.com/tsrb1ctu/image/upload/f_auto,q_auto,c_limit,w_400/pointbridge/site/photo-1472099645785-5658abf4ff4e",
   },
   {
     name: "Layla Ibrahim",
     role: "Director, Human Capital",
     bio: "HR systems architect for ministries, UN agencies and international NGOs.",
-    image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&q=80",
+    image: "https://res.cloudinary.com/tsrb1ctu/image/upload/f_auto,q_auto,c_limit,w_400/pointbridge/site/photo-1580489944761-15a19d654956",
   },
 ];
 
