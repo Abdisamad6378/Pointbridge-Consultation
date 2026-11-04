@@ -25,6 +25,7 @@ function ProfilePage() {
 
   const [name, setName] = useState("");
   const [organization, setOrganization] = useState("");
+  const [phone, setPhone] = useState("");
   const [saving, setSaving] = useState(false);
 
   const [currentPassword, setCurrentPassword] = useState("");
@@ -40,6 +41,7 @@ function ProfilePage() {
     if (user) {
       setName(user.name);
       setOrganization(user.organization);
+      setPhone(user.phone);
     }
   }, [user?.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -51,7 +53,8 @@ function ProfilePage() {
     );
   }
 
-  const profileChanged = name.trim() !== user.name || organization.trim() !== user.organization;
+  const profileChanged =
+    name.trim() !== user.name || organization.trim() !== user.organization || phone.trim() !== user.phone;
 
   const saveProfile = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -61,7 +64,7 @@ function ProfilePage() {
     }
     setSaving(true);
     try {
-      await updateProfile({ name: name.trim(), organization: organization.trim() });
+      await updateProfile({ name: name.trim(), organization: organization.trim(), phone: phone.trim() });
       toast.success("Profile updated");
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "Could not update profile");
@@ -136,7 +139,11 @@ function ProfilePage() {
                 <Label htmlFor="profile-org">Organization</Label>
                 <Input id="profile-org" value={organization} onChange={(e) => setOrganization(e.target.value)} maxLength={200} />
               </div>
-              <div className="grid gap-2 sm:col-span-2">
+              <div className="grid gap-2">
+                <Label htmlFor="profile-phone">Phone number</Label>
+                <Input id="profile-phone" type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} maxLength={30} autoComplete="tel" />
+              </div>
+              <div className="grid gap-2">
                 <Label htmlFor="profile-email">Email</Label>
                 <Input id="profile-email" value={user.email} disabled />
               </div>

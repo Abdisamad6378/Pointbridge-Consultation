@@ -34,7 +34,7 @@ export class ProfileService {
   ) {}
 
   async updateProfile(userId: number, dto: UpdateProfileDto) {
-    return this.usersService.update(userId, { name: dto.name, organization: dto.organization });
+    return this.usersService.update(userId, { name: dto.name, organization: dto.organization, phone: dto.phone });
   }
 
   async changePassword(userId: number, dto: ChangePasswordDto) {

@@ -21,6 +21,9 @@ export class User {
   @Column({ default: '' })
   organization: string;
 
+  @Column({ type: 'varchar', length: 30, default: '' })
+  phone: string;
+
   @Column({ type: 'varchar', default: 'user' })
   role: UserRole;
 
@@ -37,6 +40,7 @@ export type PublicUser = {
   name: string;
   email: string;
   organization: string;
+  phone: string;
   role: UserRole;
   createdAt: string;
   avatarUrl: string | null;
@@ -48,6 +52,7 @@ export function toPublicUser(user: User): PublicUser {
     name: user.name,
     email: user.email,
     organization: user.organization ?? '',
+    phone: user.phone ?? '',
     role: user.role,
     createdAt: new Date(user.createdAt).toISOString(),
     avatarUrl: user.avatarUpdatedAt

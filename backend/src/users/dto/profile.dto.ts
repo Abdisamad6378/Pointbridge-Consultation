@@ -1,4 +1,4 @@
-import { IsOptional, IsString, MaxLength, MinLength } from 'class-validator';
+import { IsOptional, IsString, Matches, MaxLength, MinLength } from 'class-validator';
 import { Trim } from '../../common/trim.decorator.js';
 
 export class UpdateProfileDto {
@@ -14,6 +14,13 @@ export class UpdateProfileDto {
   @IsString()
   @MaxLength(200)
   organization?: string;
+
+  @IsOptional()
+  @Trim()
+  @IsString()
+  @MaxLength(30)
+  @Matches(/^[+\d\s().-]*$/, { message: 'Phone number may only contain digits, spaces, +, -, ( and )' })
+  phone?: string;
 }
 
 export class ChangePasswordDto {

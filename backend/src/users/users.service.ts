@@ -64,6 +64,7 @@ export class UsersService {
     const user = await this.findOne(id);
     if (dto.name !== undefined) user.name = dto.name;
     if (dto.organization !== undefined) user.organization = dto.organization;
+    if (dto.phone !== undefined) user.phone = dto.phone;
     if (dto.role !== undefined) user.role = dto.role;
     if (dto.password !== undefined) user.password = await bcrypt.hash(dto.password, BCRYPT_ROUNDS);
     await this.repo.save(user);

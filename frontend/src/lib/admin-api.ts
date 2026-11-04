@@ -8,6 +8,7 @@ export type AuthUser = {
   name: string;
   email: string;
   organization: string;
+  phone: string;
   role: UserRole;
   createdAt: string;
   /** API-relative path such as /api/users/1/avatar?v=…; resolve with assetUrl(). */
@@ -110,7 +111,7 @@ export async function fetchMe() {
   return api<{ user: AuthUser }>("/api/auth/me");
 }
 
-export async function updateProfileRequest(data: { name?: string; organization?: string }) {
+export async function updateProfileRequest(data: { name?: string; organization?: string; phone?: string }) {
   return api<{ user: AuthUser }>("/api/profile", { method: "PATCH", body: JSON.stringify(data) });
 }
 

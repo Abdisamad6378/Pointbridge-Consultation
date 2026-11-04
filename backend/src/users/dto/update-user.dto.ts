@@ -1,5 +1,5 @@
 import { Trim } from '../../common/trim.decorator.js';
-import { IsIn, IsOptional, IsString, MaxLength, MinLength } from 'class-validator';
+import { IsIn, IsOptional, IsString, Matches, MaxLength, MinLength } from 'class-validator';
 import { USER_ROLES, type UserRole } from '../user.entity.js';
 
 export class UpdateUserDto {
@@ -21,6 +21,13 @@ export class UpdateUserDto {
   @IsString()
   @MaxLength(200)
   organization?: string;
+
+  @IsOptional()
+  @Trim()
+  @IsString()
+  @MaxLength(30)
+  @Matches(/^[+\d\s().-]*$/, { message: 'Phone number may only contain digits, spaces, +, -, ( and )' })
+  phone?: string;
 
   @IsOptional()
   @IsIn(USER_ROLES)
