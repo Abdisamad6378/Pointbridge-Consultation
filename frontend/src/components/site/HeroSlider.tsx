@@ -73,7 +73,7 @@ function HeroSlideImage({
         loading={priority ? "eager" : "lazy"}
         onLoad={() => setLoaded(true)}
         className={cn(
-          "h-full w-full object-cover brightness-[1.06] contrast-[1.04] saturate-[1.08] transition-all duration-700 ease-out",
+          "h-full w-full object-cover photo-blur brightness-[1.06] contrast-[1.04] saturate-[1.08] transition-all duration-700 ease-out",
           active ? "scale-105" : "scale-100",
           loaded ? "opacity-100" : "opacity-0",
         )}

@@ -62,6 +62,8 @@
 }
 
 :root {
+  /* Softens the home page slider photos. Raise for more blur, lower for less. */
+  --photo-blur: 2px;
   --radius: 0.625rem;
   /* PointBridge palette
      Primary Blue #0057B8, Secondary Green #39B54A,
@@ -270,6 +272,12 @@
   backdrop-filter: blur(14px) saturate(140%);
   -webkit-backdrop-filter: blur(14px) saturate(140%);
   border: 1px solid color-mix(in oklab, var(--foreground) 8%, transparent);
+}
+
+/* The slight zoom hides the soft edge blur leaves, so the parent must clip overflow. */
+@utility photo-blur {
+  @apply blur-(--photo-blur);
+  transform: scale(1.03);
 }
 
 @utility gradient-hero {
