@@ -48,6 +48,17 @@ export function errorMessage(body: ApiErrorBody | null) {
   return message || body?.error || "Request failed";
 }
 
+/** An error response from the API; `status` lets callers tell a rejected session from an outage. */
+export class ApiError extends Error {
+  constructor(
+    message: string,
+    readonly status: number,
+  ) {
+    super(message);
+    this.name = "ApiError";
+  }
+}
+
 async function api<T>(path: string, init?: RequestInit): Promise<T> {
   const token = getToken();
   const response = await fetch(`${API_BASE}${path}`, {
@@ -66,9 +77,9 @@ async function api<T>(path: string, init?: RequestInit): Promise<T> {
     // No JSON body on a 5xx usually means the API itself is down (e.g. the dev proxy
     // could not connect), rather than an error the API reported.
     if (!body && response.status >= 500) {
-      throw new Error("Can't reach the server right now. Please try again in a moment.");
+      throw new ApiError("Can't reach the server right now. Please try again in a moment.", response.status);
     }
-    throw new Error(errorMessage(body as ApiErrorBody | null));
+    throw new ApiError(errorMessage(body as ApiErrorBody | null), response.status);
   }
 
   return body as T;

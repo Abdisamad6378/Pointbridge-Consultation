@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import {
+  ApiError,
   fetchMe,
   getToken,
   loginRequest,
@@ -43,9 +44,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       const { user: me } = await fetchMe();
       setUser(me);
-    } catch {
-      setToken(null);
-      setUser(null);
+    } catch (error) {
+      // Only a 401 means the session is invalid. Keep the token through outages and
+      // server errors so a backend restart doesn't sign everyone out.
+      if (error instanceof ApiError && error.status === 401) {
+        setToken(null);
+        setUser(null);
+      }
     }
   };
 
