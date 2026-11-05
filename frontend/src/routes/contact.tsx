@@ -109,11 +109,11 @@ function Contact() {
               <h2 className="text-lg font-bold text-foreground">Contact Information</h2>
               <dl className="mt-4 divide-y divide-border">
                 {contactDetails.map((row) => (
-                  <div key={`${row.label}-${row.value}`} className="flex gap-4 py-3 text-sm first:pt-0 last:pb-0">
-                    <dt className="w-24 shrink-0 font-semibold text-foreground">{row.label}</dt>
-                    <dd className="text-muted-foreground">
+                  <div key={`${row.label}-${row.value}`} className="py-3 text-sm first:pt-0 last:pb-0">
+                    <dt className="font-semibold text-foreground">{row.label}</dt>
+                    <dd className="mt-0.5 text-muted-foreground">
                       {"href" in row && row.href ? (
-                        <a href={row.href} className="font-medium text-primary hover:underline break-all">
+                        <a href={row.href} className="font-medium text-primary hover:underline [overflow-wrap:anywhere]">
                           {row.value}
                         </a>
                       ) : (
@@ -138,7 +138,7 @@ function Contact() {
                 <div className="h-10 w-10 shrink-0 rounded-lg bg-primary/10 text-primary flex items-center justify-center"><c.icon className="h-5 w-5" /></div>
                 <div className="min-w-0">
                   <div className="text-xs text-muted-foreground">{c.label}</div>
-                  {c.href ? <a href={c.href} className="text-sm font-medium hover:text-primary break-all">{c.value}</a> : <div className="text-sm font-medium break-all">{c.value}</div>}
+                  {c.href ? <a href={c.href} className="text-sm font-medium hover:text-primary [overflow-wrap:anywhere]">{c.value}</a> : <div className="text-sm font-medium">{c.value}</div>}
                 </div>
               </CardContent>
             </Card>
@@ -149,14 +149,24 @@ function Contact() {
       <section className="bg-muted/30 border-t border-border">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
           <Reveal><h2 className="text-2xl font-bold">Find us</h2></Reveal>
-          <div className="mt-6 overflow-hidden rounded-2xl border border-border shadow-elegant">
-            <iframe
-              title="Map"
-              src="https://www.google.com/maps?q=Horn+of+Africa&output=embed"
-              className="w-full h-80"
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            />
+          <div className="mt-6 grid gap-6 md:grid-cols-2">
+            {[
+              { city: "Nairobi, Kenya", query: "Nairobi,Kenya" },
+              { city: "Mogadishu, Somalia", query: "Mogadishu,Somalia" },
+            ].map((office) => (
+              <div key={office.city}>
+                <h3 className="text-sm font-semibold">{office.city}</h3>
+                <div className="mt-2 overflow-hidden rounded-2xl border border-border shadow-elegant">
+                  <iframe
+                    title={`Map of ${office.city}`}
+                    src={`https://www.google.com/maps?q=${office.query}&output=embed`}
+                    className="h-80 w-full"
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                  />
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>

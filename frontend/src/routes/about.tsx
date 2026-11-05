@@ -133,8 +133,8 @@ function About() {
             {timeline.map((t, i) => (
               <Reveal key={t.year} delay={i * 0.05}>
                 <li className="relative">
-                  <div className="absolute -left-[2.45rem] flex h-8 w-8 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground ring-4 ring-background">
-                    {t.year.slice(2)}
+                  <div className="absolute -left-[2.85rem] flex h-10 w-10 items-center justify-center rounded-full bg-primary text-[11px] font-bold text-primary-foreground ring-4 ring-background">
+                    {t.year}
                   </div>
                   <h3 className="font-bold text-lg">{t.title}</h3>
                   <p className="mt-1 text-sm text-muted-foreground leading-relaxed">{t.text}</p>

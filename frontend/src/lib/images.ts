@@ -9,14 +9,14 @@ export const images = {
     projects: "https://res.cloudinary.com/tsrb1ctu/image/upload/f_auto,q_auto,c_limit,w_800/pointbridge/site/photo-1552664730-d307ca884978",
   },
   services: {
-    "strategic-policy-governance": "https://res.cloudinary.com/tsrb1ctu/image/upload/f_auto,q_auto,c_limit,w_800/pointbridge/site/photo-1560250097-0b93528c311a",
+    "strategic-policy-governance": "https://res.cloudinary.com/tsrb1ctu/image/upload/f_auto,q_auto,c_limit,w_800/pointbridge/field/galmudug-panel",
     "peace-building": "https://res.cloudinary.com/tsrb1ctu/image/upload/f_auto,q_auto,c_limit,w_800/pointbridge/site/photo-1529156069898-49953e39b3ac",
     "audit-risk": "https://res.cloudinary.com/tsrb1ctu/image/upload/f_auto,q_auto,c_limit,w_800/pointbridge/site/photo-1450101499163-c8848c66ca85",
     "human-capital": "https://res.cloudinary.com/tsrb1ctu/image/upload/f_auto,q_auto,c_limit,w_800/pointbridge/site/photo-1600880292203-757bb62b4baf",
     "research-analytics": "https://res.cloudinary.com/tsrb1ctu/image/upload/f_auto,q_auto,c_limit,w_800/pointbridge/site/photo-1551288049-bebda4e38f71",
     "monitoring-evaluation": "https://res.cloudinary.com/tsrb1ctu/image/upload/f_auto,q_auto,c_limit,w_800/pointbridge/site/photo-1460925895917-afdab827c52f",
-    "business-development": "https://res.cloudinary.com/tsrb1ctu/image/upload/f_auto,q_auto,c_limit,w_800/pointbridge/site/photo-1507679799987-c73779587ccf",
-    "ict-solutions": "https://res.cloudinary.com/tsrb1ctu/image/upload/f_auto,q_auto,c_limit,w_800/pointbridge/site/photo-1518770660439-4636190af475",
+    "business-development": "https://res.cloudinary.com/tsrb1ctu/image/upload/f_auto,q_auto,c_limit,w_800/pointbridge/hero/hero-slide-2",
+    "ict-solutions": "https://res.cloudinary.com/tsrb1ctu/image/upload/f_auto,q_auto,c_limit,w_800/pointbridge/hero/hero-slide-5",
     "education-consultancy": "https://res.cloudinary.com/tsrb1ctu/image/upload/f_auto,q_auto,c_limit,w_800/pointbridge/site/photo-1524178232363-1fb2b075b655",
     "environmental-climate": "https://res.cloudinary.com/tsrb1ctu/image/upload/f_auto,q_auto,c_limit,w_800/pointbridge/site/photo-1473341304170-971dccb5ac1e",
     "hospitality-management": "https://res.cloudinary.com/tsrb1ctu/image/upload/f_auto,q_auto,c_limit,w_800/pointbridge/site/photo-1497366216548-37526070297c",
@@ -60,6 +60,9 @@ export const images = {
   clients: "https://res.cloudinary.com/tsrb1ctu/image/upload/f_auto,q_auto,c_limit,w_1600/pointbridge/site/photo-1521737604893-d14cc237f11d",
   cta: "https://res.cloudinary.com/tsrb1ctu/image/upload/f_auto,q_auto,c_limit,w_1600/pointbridge/site/photo-1497366216548-37526070297c",
 } as const;
+
+/** The slider photos are hosted sharp, so they need this class wherever they are shown. */
+export const heroPhotoBlur = (src: string) => (src.includes("/pointbridge/hero/") ? "photo-blur" : "");
 
 export type HeroSlide = {
   image: string;

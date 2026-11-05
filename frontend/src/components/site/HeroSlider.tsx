@@ -14,26 +14,17 @@ import { cn } from "@/lib/utils";
 import { useHeroSlides } from "@/lib/use-site-content";
 
 function SlideTitle({ title, highlight, line2 }: { title: string; highlight?: string; line2?: string }) {
-  if (!highlight || !title.includes(highlight)) {
-    return (
-      <>
-        {title}
-        {line2 && (
-          <>
-            <br />
-            {line2}
-          </>
-        )}
-      </>
-    );
-  }
-
-  const [before, after] = title.split(highlight);
+  // A highlight that isn't part of the title is the ending of the headline.
+  const [before, after] = !highlight
+    ? [title, ""]
+    : title.includes(highlight)
+      ? title.split(highlight)
+      : [`${title} `, ""];
 
   return (
     <>
       {before}
-      <span className="text-secondary">{highlight}</span>
+      {highlight && <span className="text-secondary">{highlight}</span>}
       {after}
       {line2 && (
         <>
@@ -118,14 +109,14 @@ export function HeroSlider() {
 
   return (
     <section
-      className="relative isolate min-h-[70vh] overflow-hidden sm:min-h-[78vh] lg:min-h-[85vh] xl:min-h-[88vh]"
+      className="relative isolate min-h-[max(70vh,40rem)] overflow-hidden sm:min-h-[78vh] lg:min-h-[85vh] xl:min-h-[88vh]"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      <Carousel opts={{ loop: true }} setApi={setApi} className="min-h-[70vh] sm:min-h-[78vh] lg:min-h-[85vh] xl:min-h-[88vh]">
-        <CarouselContent className="-ml-0 min-h-[70vh] sm:min-h-[78vh] lg:min-h-[85vh] xl:min-h-[88vh]">
+      <Carousel opts={{ loop: true }} setApi={setApi} className="min-h-[max(70vh,40rem)] sm:min-h-[78vh] lg:min-h-[85vh] xl:min-h-[88vh]">
+        <CarouselContent className="-ml-0 min-h-[max(70vh,40rem)] sm:min-h-[78vh] lg:min-h-[85vh] xl:min-h-[88vh]">
           {heroSlides.map((item, index) => (
-            <CarouselItem key={item.title} className="relative min-h-[70vh] basis-full pl-0 sm:min-h-[78vh] lg:min-h-[85vh] xl:min-h-[88vh]">
+            <CarouselItem key={item.title} className="relative min-h-[max(70vh,40rem)] basis-full pl-0 sm:min-h-[78vh] lg:min-h-[85vh] xl:min-h-[88vh]">
               <div className="absolute inset-0 -z-10">
                 <HeroSlideImage
                   src={item.image}
@@ -139,7 +130,7 @@ export function HeroSlider() {
           ))}
         </CarouselContent>
 
-        <div className="pointer-events-none absolute inset-0 mx-auto flex max-w-7xl flex-col justify-center px-4 py-24 sm:px-6 sm:py-28 md:py-32 lg:px-8 lg:py-36 xl:py-40">
+        <div className="pointer-events-none absolute inset-0 mx-auto flex max-w-7xl flex-col justify-center px-4 pb-28 pt-16 sm:px-6 sm:pb-36 sm:pt-20 md:pb-40 md:pt-24 lg:px-8 lg:pb-48 lg:pt-8">
           <AnimatePresence mode="wait">
             <motion.div
               key={current}
@@ -147,10 +138,10 @@ export function HeroSlider() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -16 }}
               transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-              className="pointer-events-auto max-w-4xl text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.45)]"
+              className="max-w-4xl text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.45)]"
             >
               {slide.eyebrow && (
-                <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-secondary sm:text-xs">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white sm:text-xs">
                   {slide.eyebrow}
                 </p>
               )}
@@ -165,7 +156,7 @@ export function HeroSlider() {
               <p className="mt-4 max-w-xl text-sm leading-relaxed text-white/95 sm:mt-6 sm:text-base md:text-lg">
                 {slide.description}
               </p>
-              <div className="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:flex-wrap">
+              <div className="pointer-events-auto mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:flex-wrap">
                 <Button
                   asChild
                   size="lg"
@@ -193,8 +184,19 @@ export function HeroSlider() {
           </AnimatePresence>
         </div>
 
-        <div className="pointer-events-none absolute inset-x-0 bottom-6 flex items-center justify-between px-4 sm:bottom-8 sm:px-6 lg:px-8">
-          <div className="pointer-events-auto mx-auto flex items-center gap-2">
+        {/* Sits below the text and above the quick-link cards that overlap the slider. */}
+        <div className="absolute inset-x-0 bottom-16 z-10 flex items-center justify-center gap-3 sm:bottom-20 md:bottom-24 lg:bottom-32">
+          <Button
+            type="button"
+            variant="outline"
+            size="icon"
+            aria-label="Previous slide"
+            onClick={() => api?.scrollPrev()}
+            className="h-10 w-10 rounded-full border-white/30 bg-black/20 text-white backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:bg-black/35 hover:text-white"
+          >
+            <ChevronLeft className="h-5 w-5" />
+          </Button>
+          <div className="flex items-center gap-2">
             {heroSlides.map((_, index) => (
               <button
                 key={index}
@@ -208,28 +210,17 @@ export function HeroSlider() {
               />
             ))}
           </div>
+          <Button
+            type="button"
+            variant="outline"
+            size="icon"
+            aria-label="Next slide"
+            onClick={() => api?.scrollNext()}
+            className="h-10 w-10 rounded-full border-white/30 bg-black/20 text-white backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:bg-black/35 hover:text-white"
+          >
+            <ChevronRight className="h-5 w-5" />
+          </Button>
         </div>
-
-        <Button
-          type="button"
-          variant="outline"
-          size="icon"
-          aria-label="Previous slide"
-          onClick={() => api?.scrollPrev()}
-          className="absolute left-2 top-1/2 z-10 inline-flex h-10 w-10 -translate-y-1/2 rounded-full border-white/30 bg-black/20 text-white backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:bg-black/35 hover:text-white sm:left-4 sm:h-11 sm:w-11 lg:left-8"
-        >
-          <ChevronLeft className="h-5 w-5" />
-        </Button>
-        <Button
-          type="button"
-          variant="outline"
-          size="icon"
-          aria-label="Next slide"
-          onClick={() => api?.scrollNext()}
-          className="absolute right-2 top-1/2 z-10 inline-flex h-10 w-10 -translate-y-1/2 rounded-full border-white/30 bg-black/20 text-white backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:bg-black/35 hover:text-white sm:right-4 sm:h-11 sm:w-11 lg:right-8"
-        >
-          <ChevronRight className="h-5 w-5" />
-        </Button>
       </Carousel>
     </section>
   );

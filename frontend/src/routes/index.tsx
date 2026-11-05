@@ -7,9 +7,11 @@ import { HeroSlider } from "@/components/site/HeroSlider";
 import { ServiceCard } from "@/components/site/ServiceCard";
 import { ContentCard } from "@/components/site/ContentCard";
 import { SectionHeader } from "@/components/site/SectionHeader";
-import { featuredServices, stats } from "@/lib/site-data";
+import { FieldPhotoTint } from "@/components/site/FieldPhotoTint";
+import { featuredServices, fieldGallery, stats } from "@/lib/site-data";
 import { companyTagline } from "@/lib/company-profile";
 import { images } from "@/lib/images";
+import { cn } from "@/lib/utils";
 import {
   resolveBlogPosts,
   resolvePublications,
@@ -38,11 +40,18 @@ export const Route = createFileRoute("/")({
 });
 
 const quickLinkMeta = [
-  { to: "/blog", label: "Stories & insights", sub: "Blogs", key: "blog" as const },
+  { to: "/blog", label: "Stories & insights", sub: "News", key: "blog" as const },
   { to: "/training", label: "Catalogue & apply", sub: "Training", key: "training" as const },
   { to: "/publications", label: "Reports & briefs", sub: "Research", key: "publications" as const },
-  { to: "/projects", label: "News & highlights", sub: "Events", key: "projects" as const },
+  { to: "/projects", label: "Case studies & field work", sub: "Projects", key: "projects" as const },
 ] as const;
+
+/** Phones show this many services, then a "View all" button. */
+const PHONE_SERVICE_COUNT = 6;
+
+const homeFieldPhotos = fieldGallery.filter((photo) =>
+  ["Our field team", "Conflict mapping · Luuq", "Stakeholder workshop · Galmudug"].includes(photo.label),
+);
 
 function Home() {
   const { data: imageMap } = useSiteImageMap();
@@ -76,7 +85,7 @@ function Home() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[oklch(0.18_0.07_260/0.92)] via-[oklch(0.18_0.07_260/0.35)] to-transparent" />
                   <div className="absolute bottom-0 left-0 right-0 p-5 text-white">
-                    <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-secondary">{item.sub}</p>
+                    <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-white">{item.sub}</p>
                     <p className="mt-1 text-sm font-bold leading-snug sm:text-base">{item.label}</p>
                     <span className="mt-2 inline-flex items-center gap-1 text-xs font-medium text-white/75 group-hover:text-white">
                       Read more… <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-1" />
@@ -117,7 +126,7 @@ function Home() {
           </Reveal>
           <div className="mt-8 grid gap-4 sm:mt-12 sm:gap-6 md:grid-cols-2 lg:grid-cols-3">
             {featuredServices.map((s, i) => (
-              <Reveal key={s.slug} delay={i * 0.04}>
+              <Reveal key={s.slug} delay={i * 0.04} className={cn("h-full", i >= PHONE_SERVICE_COUNT && "hidden md:block")}>
                 <ServiceCard
                   title={s.title}
                   short={s.short}
@@ -127,6 +136,61 @@ function Home() {
                 />
               </Reveal>
             ))}
+            {/* Fills the last row now that there are 11 services. */}
+            <Reveal delay={0.1} className="hidden h-full md:block">
+              <div className="gradient-hero flex h-full flex-col justify-center rounded-2xl p-8 text-white">
+                <h3 className="text-2xl font-bold">Have an assignment?</h3>
+                <p className="mt-2 text-sm leading-relaxed text-white/85">
+                  Tell us what you need and we will put the right team on it.
+                </p>
+                <Button asChild variant="secondary" className="mt-6 self-start">
+                  <Link to="/contact">Talk to us</Link>
+                </Button>
+              </div>
+            </Reveal>
+          </div>
+          <div className="mt-8 text-center md:hidden">
+            <Button asChild variant="outline" className="w-full sm:w-auto">
+              <Link to="/services">
+                View all services <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* From the field */}
+      <section className="section-padding border-t border-border bg-white">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <Reveal>
+            <SectionHeader
+              eyebrow="From the Field"
+              title="Our teams, on the ground"
+              description="Conflict mapping in Luuq, Gedo Region, and women and youth caucus formation in Galmudug."
+            />
+          </Reveal>
+          <div className="mt-8 grid gap-6 sm:mt-12 sm:grid-cols-3">
+            {homeFieldPhotos.map((photo, i) => (
+              <Reveal key={photo.label} delay={i * 0.05}>
+                <figure>
+                  <div className="relative aspect-[16/10] overflow-hidden rounded-xl bg-muted">
+                    <img src={photo.image} alt={photo.alt} loading="lazy" className="h-full w-full object-cover object-top" />
+                    <FieldPhotoTint src={photo.image} />
+                  </div>
+                  <figcaption className="mt-3">
+                    <p className="text-xs font-semibold uppercase tracking-wider text-primary">{photo.label}</p>
+                    <p className="mt-1 text-sm text-muted-foreground">{photo.caption}</p>
+                  </figcaption>
+                </figure>
+              </Reveal>
+            ))}
+          </div>
+          <div className="mt-8 text-center">
+            <Button asChild variant="outline">
+              <Link to="/projects">
+                View our projects <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
           </div>
         </div>
       </section>
@@ -275,6 +339,23 @@ function Home() {
               </Reveal>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Proposal banner */}
+      <section className="bg-[oklch(0.16_0.06_260)] text-white">
+        <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-6 px-4 py-12 sm:px-6 md:flex-row md:items-center lg:px-8">
+          <div className="max-w-2xl">
+            <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">Have an assignment in mind?</h2>
+            <p className="mt-2 text-sm leading-relaxed text-white/80 sm:text-base">
+              Send us your terms of reference or expression of interest and we will respond within two business days.
+            </p>
+          </div>
+          <Button asChild size="lg" className="w-full shrink-0 rounded-full bg-secondary text-secondary-foreground hover:bg-secondary/90 sm:w-auto">
+            <Link to="/contact">
+              Request a proposal <ArrowRight className="ml-2 h-4 w-4" />
+            </Link>
+          </Button>
         </div>
       </section>
     </>

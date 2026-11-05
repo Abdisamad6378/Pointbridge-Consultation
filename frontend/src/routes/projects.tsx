@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { Reveal } from "@/components/site/Reveal";
 import { PageHero } from "@/components/site/PageHero";
@@ -6,9 +6,11 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { FieldPhotoTint } from "@/components/site/FieldPhotoTint";
 import { SectionHeader } from "@/components/site/SectionHeader";
 import { fieldGallery, projects, projectCategories } from "@/lib/site-data";
 import { images } from "@/lib/images";
+import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/projects")({
   head: () => ({
@@ -59,12 +61,13 @@ function Projects() {
                   className="h-full overflow-hidden cursor-pointer hover:shadow-elegant transition-all group"
                   onClick={() => setActive(p)}
                 >
-                  <div className="aspect-[16/10] overflow-hidden">
+                  <div className="relative aspect-[16/10] overflow-hidden">
                     <img
                       src={p.image}
                       alt=""
                       className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
+                    <FieldPhotoTint src={p.image} />
                   </div>
                   <CardContent className="p-6">
                     <div className="flex items-center gap-2">
@@ -77,6 +80,20 @@ function Projects() {
                 </Card>
               </Reveal>
             ))}
+            {/* Fills the last row on desktop, whichever category is selected. */}
+            {filtered.length % 3 !== 0 && (
+              <Reveal className={cn("hidden h-full lg:block", filtered.length % 3 === 1 && "lg:col-span-2")}>
+                <div className="gradient-hero flex h-full flex-col justify-center rounded-xl p-8 text-white">
+                  <h3 className="text-2xl font-bold">Have an assignment?</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-white/85">
+                    Tell us what you need and we will put the right team on it.
+                  </p>
+                  <Button asChild variant="secondary" className="mt-6 self-start">
+                    <Link to="/contact">Talk to us</Link>
+                  </Button>
+                </div>
+              </Reveal>
+            )}
           </div>
         </div>
       </section>
@@ -94,8 +111,9 @@ function Projects() {
             {fieldGallery.map((photo, i) => (
               <Reveal key={photo.label} delay={i * 0.05}>
                 <figure>
-                  <div className="aspect-[16/10] overflow-hidden rounded-xl bg-muted">
+                  <div className="relative aspect-[16/10] overflow-hidden rounded-xl bg-muted">
                     <img src={photo.image} alt={photo.alt} loading="lazy" className="h-full w-full object-cover object-top" />
+                    <FieldPhotoTint src={photo.image} />
                   </div>
                   <figcaption className="mt-3">
                     <p className="text-xs font-semibold uppercase tracking-wider text-primary">{photo.label}</p>
@@ -112,12 +130,13 @@ function Projects() {
         <DialogContent className="max-w-lg p-0 overflow-hidden">
           {active && (
             <>
-              <div className="aspect-video overflow-hidden">
+              <div className="relative aspect-video overflow-hidden">
                 <img
                   src={active.image}
                   alt=""
                   className="h-full w-full object-cover"
                 />
+                <FieldPhotoTint src={active.image} />
               </div>
               <div className="p-6">
                 <DialogHeader>
