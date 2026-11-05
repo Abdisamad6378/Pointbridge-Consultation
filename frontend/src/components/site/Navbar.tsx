@@ -4,9 +4,9 @@ import { useEffect, useState } from "react";
 import type { LucideIcon } from "lucide-react";
 import {
   Briefcase,
-  Calendar,
   ChevronDown,
   FileText,
+  FolderOpen,
   GraduationCap,
   Home,
   Info,
@@ -32,16 +32,14 @@ import { cn } from "@/lib/utils";
 const navIcons: Record<string, LucideIcon> = {
   "/": Home,
   "/training": GraduationCap,
-  "/projects": Calendar,
+  "/projects": FolderOpen,
   "/publications": FileText,
   "/blog": Newspaper,
   "/contact": MessageCircle,
 };
 
 const navItemClass =
-  "inline-flex shrink-0 items-center gap-1.5 rounded-lg px-1.5 py-2 text-xs font-medium transition-all duration-300 xl:px-2 xl:text-[13px] 2xl:gap-2 2xl:px-3 2xl:text-sm";
-
-const navIconClass = "inline-flex h-3.5 w-3.5 shrink-0 opacity-80 xl:h-4 xl:w-4";
+  "inline-flex shrink-0 items-center gap-1.5 rounded-lg px-1.5 py-2 text-xs font-medium transition-all duration-300 xl:px-2 xl:text-[13px]";
 
 function NavLink({
   to,
@@ -49,14 +47,12 @@ function NavLink({
   hash,
   active,
   onClick,
-  icon: Icon,
 }: {
   to: string;
   label: string;
   hash?: string;
   active?: boolean;
   onClick?: () => void;
-  icon?: LucideIcon;
 }) {
   return (
     <Link
@@ -67,11 +63,10 @@ function NavLink({
         "relative",
         navItemClass,
         active
-          ? "text-primary after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:rounded-full after:bg-secondary after:transition-all 2xl:after:left-3 2xl:after:right-3"
+          ? "text-primary after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:rounded-full after:bg-secondary after:transition-all"
           : "text-foreground/80 hover:bg-primary/5 hover:text-primary hover:-translate-y-px",
       )}
     >
-      {Icon && <Icon className={navIconClass} />}
       {label}
     </Link>
   );
@@ -143,9 +138,9 @@ export function Navbar() {
 
           {/* Desktop nav — xl+ only, single row, no wrap */}
           <div className="hidden min-w-0 flex-1 items-center justify-center xl:flex">
-            <ul className="flex flex-nowrap items-center justify-center gap-0.5 2xl:gap-1">
+            <ul className="flex flex-nowrap items-center justify-center gap-0.5">
               <li>
-                <NavLink to="/" label="Home" active={pathname === "/"} icon={Home} />
+                <NavLink to="/" label="Home" active={pathname === "/"} />
               </li>
               <li>
                 <DropdownMenu>
@@ -156,7 +151,6 @@ export function Navbar() {
                       isAboutActive ? "text-primary" : "text-foreground/80",
                     )}
                   >
-                    <Info className={navIconClass} />
                     About
                     <ChevronDown className="h-3.5 w-3.5 opacity-60 transition-transform duration-300 group-data-[state=open]:rotate-180" />
                   </DropdownMenuTrigger>
@@ -180,7 +174,6 @@ export function Navbar() {
                       isServicesActive ? "text-primary" : "text-foreground/80",
                     )}
                   >
-                    <Briefcase className={navIconClass} />
                     Services
                     <ChevronDown className="h-3.5 w-3.5 opacity-60" />
                   </DropdownMenuTrigger>
@@ -197,13 +190,16 @@ export function Navbar() {
               </li>
               {mainNav.slice(1).map((l) => (
                 <li key={l.to}>
-                  <NavLink to={l.to} label={l.label} active={pathname === l.to} icon={navIcons[l.to]} />
+                  <NavLink to={l.to} label={l.label} active={pathname === l.to} />
                 </li>
               ))}
             </ul>
           </div>
 
-          <div className="flex shrink-0 items-center gap-2 sm:gap-3 xl:gap-3 2xl:gap-4">
+          <div className="flex shrink-0 items-center gap-2 sm:gap-3">
+            <Button asChild size="sm" className="h-8 rounded-full bg-secondary px-3 text-xs text-secondary-foreground hover:bg-secondary/90 sm:h-9 sm:px-4 sm:text-sm">
+              <Link to="/contact">Request a proposal</Link>
+            </Button>
             <HeaderAuthActions />
             <Button
               variant="ghost"

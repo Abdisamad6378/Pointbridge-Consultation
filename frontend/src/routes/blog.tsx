@@ -11,9 +11,9 @@ import { blogPosts } from "@/lib/site-data";
 export const Route = createFileRoute("/blog")({
   head: () => ({
     meta: [
-      { title: "Blog & Insights — PointBridge Consulting" },
+      { title: "News & Insights — PointBridge Consulting" },
       { name: "description", content: "Insights on governance, peace-building, M&E, leadership and research from PointBridge practitioners." },
-      { property: "og:title", content: "Blog — PointBridge Consulting" },
+      { property: "og:title", content: "News — PointBridge Consulting" },
       { property: "og:description", content: "Field-tested insights from our practitioners." },
       { property: "og:url", content: "/blog" },
     ],
@@ -69,7 +69,7 @@ function Blog() {
             <Input placeholder="Search articles…" value={q} onChange={(e) => setQ(e.target.value)} className="pl-9" />
           </div>
 
-          <div className="mt-8 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="mt-8 grid md:grid-cols-3 gap-6">
             {rest.map((p, i) => (
               <Reveal key={p.slug} delay={i * 0.06}>
                 <ContentCard

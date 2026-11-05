@@ -15,7 +15,7 @@ export const serviceLinks = services.map((s) => ({
 export const mainNav = [
   { to: "/", label: "Home" },
   { to: "/training", label: "Training" },
-  { to: "/projects", label: "Events" },
+  { to: "/projects", label: "Projects" },
   { to: "/publications", label: "Publications" },
   { to: "/blog", label: "News" },
   { to: "/contact", label: "Contact" },
